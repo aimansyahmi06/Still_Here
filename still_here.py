@@ -23,9 +23,7 @@ def send_email(subject, body):
             s.login(os.environ.get ("STILLHERE_EMAILADDRESS"), os.environ.get("STILLHERE_PASSWORD"))
             s.send_message(email)
     except (smtplib.SMTPException, OSError, KeyError) as error:
-        logging.exception("Email failed: %s", subject)
         return False  # it did not work
-    logging.info("Email sent: %s", subject)
     return True
 
 def check_in():
@@ -36,11 +34,9 @@ def check_in():
     message.configure(text=f"Thanks! Checked in at {now}")
     root.update()  # redraw the window now, before the slow email part
     if first_time_today:
-        logging.info("First time checked in")
         sent = send_email("StillHere: Grandma checked in",
                           f"Good news! Grandma checked in today at {now}.")
         if not sent:
-            logging.warning("Something went wrong while checking in")
             message.configure(text="Checked in, but couldn't tell your family. Please call them.")
 
 
