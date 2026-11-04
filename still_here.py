@@ -23,6 +23,7 @@ def send_email(subject, body):
             s.login(os.environ.get ("STILLHERE_EMAILADDRESS"), os.environ.get("STILLHERE_PASSWORD"))
             s.send_message(email)
     except (smtplib.SMTPException, OSError, KeyError) as error:
+        print(f"Email failed: {error}")
         return False  # it did not work
     return True
 
